@@ -25,7 +25,7 @@ namespace MovieShopMVC.Infrastructure.Data
         public DbSet<Favorite> Favorite { get; set; }
         public DbSet<Review> Review { get; set; }
         public DbSet<Purchase> Purchase { get; set; }
-        public DbSet<Trailer> Trailer { get; set; }
+        public DbSet<Trailer> Trailer { get; set; } 
 
 
 

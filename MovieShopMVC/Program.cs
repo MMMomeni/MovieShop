@@ -7,6 +7,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddSqlServer<MovieShopDbContext>(builder.Configuration.GetConnectionString("MovieShop"));
 
+//builder.Services.AddScoped<MovieShopDbContext>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
