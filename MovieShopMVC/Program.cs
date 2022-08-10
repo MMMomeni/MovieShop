@@ -1,4 +1,8 @@
+using MovieShopMVC.Core.Contracts.Repository;
+using MovieShopMVC.Core.Contracts.Service;
 using MovieShopMVC.Infrastructure.Data;
+using MovieShopMVC.Infrastructure.Repository;
+using MovieShopMVC.Infrastructure.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +11,11 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddSqlServer<MovieShopDbContext>(builder.Configuration.GetConnectionString("MovieShop"));
 
-//builder.Services.AddScoped<MovieShopDbContext>();
+// Repository Injection
+builder.Services.AddScoped<IMovieRepositoryAsync, MovieRepositoryAsync>();
+
+// Service Injection
+builder.Services.AddScoped<IMovieServiceAsync, MovieServiceAsync>();
 
 var app = builder.Build();
 
@@ -28,6 +36,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Movies}/{action=Index}/{id?}");
 
 app.Run();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MovieShopMVC.Infrastructure.Repository
 {
-    public class ReportRepositoryAsync:BaseRepositoryAsync<Report>, IReportRepositoryAsync
+    public class ReportRepositoryAsync
     {
     }
 }

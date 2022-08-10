@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@{
+    foreach(MovieModel movieModel in Model)
+    {
+        <partial name="_MovieCard" model="movieModel"/>
+    }
+    
+}
+<div class="" ><a class="btn btn-warning " asp-action="CreateMovie" asp-controller="Movies">Add Movie</a></div>
+
