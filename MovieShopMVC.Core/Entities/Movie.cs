@@ -50,13 +50,13 @@ namespace MovieShopMVC.Core.Entities
         [Column(TypeName = "varchar(MAX)")]
         public string? CreatedBy { get; set; }
 
-        public virtual ICollection<MovieGenre> MovieGenres { get; set; }
-        public virtual ICollection<MovieCrew> MovieCrews { get; set; }
-        public virtual ICollection<MovieCast> MovieCasts { get; set; }
-        public virtual ICollection<Favorite> Favorites { get; set; }
-        public virtual ICollection<Review> Reviews { get; set; }
-        public virtual ICollection<Purchase> Purchases { get; set; }
-        public virtual ICollection<Trailer> Trailers { get; set; }
+        public virtual ICollection<MovieGenre>? MovieGenres { get; set; }
+        public virtual ICollection<MovieCrew>? MovieCrews { get; set; }
+        public virtual ICollection<MovieCast>? MovieCasts { get; set; }
+        public virtual ICollection<Favorite>? Favorites { get; set; }
+        public virtual ICollection<Review>? Reviews { get; set; }
+        public virtual ICollection<Purchase>? Purchases { get; set; }
+        public virtual ICollection<Trailer>? Trailers { get; set; }
 
 
     }

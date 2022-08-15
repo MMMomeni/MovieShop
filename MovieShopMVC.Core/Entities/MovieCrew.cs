@@ -20,6 +20,7 @@ namespace MovieShopMVC.Core.Entities
         [Column(TypeName = "varchar(128)")]
         public string job { get; set; }
 
+        public virtual Movie Movie { get; set; }
         public virtual Crew Crew { get; set; }
     }
 }

@@ -348,13 +348,15 @@ namespace MovieShopMVC.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MovieShopMVC.Core.Entities.Movie", null)
+                    b.HasOne("MovieShopMVC.Core.Entities.Movie", "Movie")
                         .WithMany("MovieCasts")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Cast");
+
+                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("MovieShopMVC.Core.Entities.MovieCrew", b =>
@@ -365,13 +367,15 @@ namespace MovieShopMVC.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MovieShopMVC.Core.Entities.Movie", null)
+                    b.HasOne("MovieShopMVC.Core.Entities.Movie", "Movie")
                         .WithMany("MovieCrews")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Crew");
+
+                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("MovieShopMVC.Core.Entities.MovieGenre", b =>

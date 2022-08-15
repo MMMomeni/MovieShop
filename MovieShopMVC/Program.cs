@@ -13,9 +13,13 @@ builder.Services.AddSqlServer<MovieShopDbContext>(builder.Configuration.GetConne
 
 // Repository Injection
 builder.Services.AddScoped<IMovieRepositoryAsync, MovieRepositoryAsync>();
+builder.Services.AddScoped<ICastRepositoryAsync, CastRepositoryAsync>();
+builder.Services.AddScoped<IMovieCastRepositoryAsync, MovieCastRepositoryAsync>();
 
 // Service Injection
 builder.Services.AddScoped<IMovieServiceAsync, MovieServiceAsync>();
+builder.Services.AddScoped<IMovieCastServiceAsync, MovieCastServiceAsync>();
+builder.Services.AddScoped<ICastServiceAsync, CastServiceAsync>();
 
 var app = builder.Build();
 

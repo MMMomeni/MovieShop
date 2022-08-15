@@ -12,7 +12,7 @@ using MovieShopMVC.Infrastructure.Data;
 namespace MovieShopMVC.Infrastructure.Migrations
 {
     [DbContext(typeof(MovieShopDbContext))]
-    [Migration("20220805041450_initial")]
+    [Migration("20220814200220_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -350,13 +350,15 @@ namespace MovieShopMVC.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MovieShopMVC.Core.Entities.Movie", null)
+                    b.HasOne("MovieShopMVC.Core.Entities.Movie", "Movie")
                         .WithMany("MovieCasts")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Cast");
+
+                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("MovieShopMVC.Core.Entities.MovieCrew", b =>
@@ -367,13 +369,15 @@ namespace MovieShopMVC.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MovieShopMVC.Core.Entities.Movie", null)
+                    b.HasOne("MovieShopMVC.Core.Entities.Movie", "Movie")
                         .WithMany("MovieCrews")
                         .HasForeignKey("MovieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Crew");
+
+                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("MovieShopMVC.Core.Entities.MovieGenre", b =>

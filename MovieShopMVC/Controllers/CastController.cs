@@ -1,12 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MovieShopMVC.Core.Contracts.Service;
+using MovieShopMVC.Core.Models;
 
 namespace MovieShopMVC.Controllers
 {
     public class CastController : Controller
     {
-        public IActionResult Index()
+        private readonly ICastServiceAsync castServ;
+        private readonly IMovieCastServiceAsync movieCastServ;
+
+        public CastController (ICastServiceAsync castServ, IMovieCastServiceAsync movieCastServ)
         {
-            return View();
+            this.castServ = castServ;
+            this.movieCastServ = movieCastServ;
         }
+
     }
 }

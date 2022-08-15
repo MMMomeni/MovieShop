@@ -36,9 +36,9 @@ namespace MovieShopMVC.Infrastructure.Repository
             
         }
 
-        public  async Task<int> InsertAsync(T entity)
+        public async Task<int> InsertAsync(T entity)
         {
-            DbContext.Set<T>().AddAsync(entity);
+            await DbContext.Set<T>().AddAsync(entity);
             return await DbContext.SaveChangesAsync();
         }
 

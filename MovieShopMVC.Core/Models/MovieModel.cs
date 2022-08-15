@@ -35,5 +35,7 @@ namespace MovieShopMVC.Core.Models
         public DateTime? UpdatedDate { get; set; }
         public string? UpdatedBy { get; set; }
         public string? CreatedBy { get; set; }
+
+        public virtual IEnumerable<MovieCastModel>? MovieCasts { get; set; }
     }
 }

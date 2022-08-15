@@ -1,0 +1,50 @@
+﻿<section>
+<div class="container">
+	<div class="row">
+		<div class="col-4">
+			<img class="w-50" src=@Model.PosterUrl alt="Card image cap">
+		</div>
+		<div class="col-4">
+			<ul class="text-white" style="list-style-type:none;">
+				<li class="m-3"><h1>@Model.Title</h1></li>
+				<li class="text-muted m-3">@Model.Tagline</li>
+				<li class="text-muted m-3">@Model.RunTime m | @Model.ReleaseDate.ToShortDateString()</li>
+				<li class="m-3">@Model.Overview</li>
+			</ul>
+		</div>
+		<div class="col-4">
+			<div><a class="btn btn-warning mb-3 mx-5">REVIEW</a></div>
+			<div><a class="btn btn-warning mb-3 mx-5">BUY $@Model.Price</a></div>
+		</div>
+	</div>
+</div>
+<div class="container mt-lg-5">
+	<div class="row">
+		<div class="col-6">
+			<div class="text-white">MOVIE FACTS</div>
+			<ul class="text-white my-3" style="list-style-type:none;">
+				<li>Release Date <span class="bg-warning text-black rounded">@Model.ReleaseDate.ToShortDateString()</span></li>
+				
+				<hr />
+				<li>Run Time <span class="bg-warning text-black rounded">@Model.RunTime</span></li>
+				<hr />
+				<li>Box Office <span class="bg-warning text-black rounded">@Model.Revenue</span></li>
+				<hr />
+				<li>Budget <span class="bg-warning text-black rounded">@Model.Budget</span></li>
+			</ul>
+			<div class="text-white mb-3">TRAILERS</div>
+			<div class="text-white"></div>
+		</div>
+		<div class="col-6">
+
+		</div>
+	</div>
+</div>
+</section>
+<div class="fixed-bottom" style="
+    bottom: 80px;
+    left: 80%;
+    margin-left: -104.5px;">
+<a class="btn btn-warning " asp-action="CreateCast" asp-controller="Movies" asp-route-movieId="@Model.Id">Add Cast</a></div>
+
+
