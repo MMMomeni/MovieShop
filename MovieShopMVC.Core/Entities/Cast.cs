@@ -19,6 +19,8 @@ namespace MovieShopMVC.Core.Entities
         [Column(TypeName = "varchar(2048)")]
         public string? ProfilePath { get; set; }
 
+        //public MovieCast? MovieCast { get; set; }
+
         public virtual ICollection<MovieCast>? MovieCasts { get; set; }
     }
 }

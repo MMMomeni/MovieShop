@@ -9,11 +9,12 @@ namespace MovieShopMVC.Core.Contracts.Service
 {
     public interface IMovieCastServiceAsync
     {
-        Task<int> InsertMovieCastAsync(int movieId, int castId, string character);
+        Task<int> InsertMovieCastAsync(MovieCastModel model);
         Task<int> UpdateMovieCastAsync(MovieCastModel model);
         Task<int> DeleteMovieCastAsync(int Id);
         Task<MovieCastModel> GetMovieCastByIdAsync(int Id);
 
         Task<IEnumerable<MovieCastModel>> GetAllMovieCastByMovieId(int MovieId);
+        Task<IEnumerable<MoviesByCastModel>> GetAllMoviesByCastId(int CastId);
     }
 }

@@ -11,9 +11,9 @@ namespace MovieShopMVC.Controllers
         private readonly IMovieServiceAsync movieServ;
         private readonly IMovieCastServiceAsync movieCastServ;
         private readonly ICastServiceAsync castServ;
-        private int movieId;
-        private int castId;
-        private string character;
+        private int savedMovieId;
+        //private int castId;
+        //private string character;
         
 
         public MoviesController(IMovieServiceAsync movieServ, IMovieCastServiceAsync movieCastServ, ICastServiceAsync castServ)
@@ -65,26 +65,56 @@ namespace MovieShopMVC.Controllers
             return View(movieId);
         }
         [HttpPost]
-        public async Task<IActionResult> CreateCast(CastModel model, int movieId, string character)
+        public async Task<IActionResult> CreateCast(CastModel model)
         {
             if (ModelState.IsValid)
             {
-                var t1 = castServ.InsertCastAsync(model);
+                await castServ.InsertCastAsync(model);
                 //await Task.Delay(1000);
   
-                Task.WaitAll(t1);
-                this.movieId = movieId;
-                this.character = character;
-                castId = model.Id;
-                await CreateMovieCastAsync();
+                //Task.WaitAll(t1);
+                //this.movieId = movieId;
+                //this.character = character;
+                //castId = model.Id;
+               // await CreateMovieCastAsync();
+               return RedirectToAction("Index");
                 
             }
-            return View();
+            return View(model);
         }
-        public async Task CreateMovieCastAsync()
+
+        [HttpGet]
+        public async Task<IActionResult> ChooseCast(int movieId)
         {
-            await movieCastServ.InsertMovieCastAsync(movieId, castId, character);
-            RedirectToAction("Index");
+            this.savedMovieId = movieId;
+            var allCast = await castServ.GetAllCastsAsync();
+            ViewBag.MovieId = movieId;
+            return View(allCast);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CreateMovieCast(int castId, int movieId)
+        {
+            var model = await castServ.GetCastByIdAsync(castId);
+            ViewBag.MovieId = movieId;
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateMovieCast(MovieCastModel model)
+        {
+            if (ModelState.IsValid)
+            {
+         
+                //model.MovieId = savedMovieId;
+                Console.WriteLine(model.Id);
+                Console.WriteLine(model.CastId);
+                Console.WriteLine(model.MovieId);
+                Console.WriteLine(model.Character);
+                await movieCastServ.InsertMovieCastAsync(model);
+                return RedirectToAction("Index");
+            }
+            
+            return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -255,7 +255,8 @@ namespace MovieShopMVC.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_MovieCast_CastId",
                 table: "MovieCast",
-                column: "CastId");
+                column: "CastId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_MovieCast_MovieId",

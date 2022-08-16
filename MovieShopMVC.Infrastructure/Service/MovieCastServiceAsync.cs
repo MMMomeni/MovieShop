@@ -13,15 +13,45 @@ namespace MovieShopMVC.Infrastructure.Service
     public class MovieCastServiceAsync : IMovieCastServiceAsync
     {
         private readonly IMovieCastRepositoryAsync movieCastRep;
+        private readonly ICastRepositoryAsync castRep;
+        private readonly IMovieRepositoryAsync movieRep;
 
-        public MovieCastServiceAsync (IMovieCastRepositoryAsync movieCastRep)
+        public MovieCastServiceAsync (IMovieCastRepositoryAsync movieCastRep, ICastRepositoryAsync castRep, IMovieRepositoryAsync movieRep)
         {
             this.movieCastRep = movieCastRep;
+            this.castRep = castRep;
+            this.movieRep = movieRep;
         }
 
         public Task<int> DeleteMovieCastAsync(int Id)
         {
             return movieCastRep.DeleteAsync(Id);
+        }
+
+        public async Task<IEnumerable<MoviesByCastModel>> GetAllMoviesByCastId(int CastId)
+        {
+            var allMovieCasts = await movieCastRep.GetAllAsync();
+            List<MoviesByCastModel> result = new List<MoviesByCastModel>();
+
+            foreach (var movieCast in allMovieCasts)
+            {
+                if(movieCast.CastId == CastId)
+                {
+                    Cast cast = await castRep.GetByIdAsync(movieCast.CastId);
+                    Movie movie = await movieRep.GetByIdAsync(movieCast.MovieId);
+
+                    MoviesByCastModel moviesByCastModel = new MoviesByCastModel()
+                    {
+                        Name = cast.Name,
+                        ProfilePath = cast.ProfilePath,
+                        Character = movieCast.Character,
+                        Title = movie.Title
+                    };
+                    result.Add(moviesByCastModel);
+                }
+            }
+            return result;
+
         }
 
         public async Task<IEnumerable<MovieCastModel>> GetAllMovieCastByMovieId(int MovieId)
@@ -34,11 +64,21 @@ namespace MovieShopMVC.Infrastructure.Service
             {
                 if (movieCast.MovieId == MovieId)
                 {
+                    Cast cast = await castRep.GetByIdAsync(movieCast.CastId);
                     MovieCastModel model = new MovieCastModel();
+                    CastModel castModel = new CastModel()
+                    {
+                        Id = cast.Id,
+                        Name = cast.Name,
+                        Gender = cast.Gender,
+                        TmdbUrl = cast.TmdbUrl,
+                        ProfilePath = cast.ProfilePath,
+                    };
                     model.Id = movieCast.Id;
                     model.CastId = movieCast.CastId;
                     model.MovieId = movieCast.Id;
                     model.Character = movieCast.Character;
+                    model.Cast = castModel;
                     result.Add(model);
                 }
             }
@@ -56,16 +96,18 @@ namespace MovieShopMVC.Infrastructure.Service
             return model;
         }
 
-        public Task<int> InsertMovieCastAsync(int movieId, int castId, string character)
+        public async Task<int> InsertMovieCastAsync(MovieCastModel model)
         {
+            Cast cast = await castRep.GetByIdAsync(model.CastId);
             MovieCast movieCast = new MovieCast()
             {
-                CastId = castId,
-                MovieId = movieId,
-                Character = character
+                CastId = model.CastId,
+                MovieId = model.MovieId,
+                Character = model.Character,
+                Cast = cast
             };
             
-            return movieCastRep.InsertAsync(movieCast);
+            return await movieCastRep.InsertAsync(movieCast);
         }
 
         public Task<int> UpdateMovieCastAsync(MovieCastModel model)

@@ -73,7 +73,7 @@ namespace MovieShopMVC.Infrastructure.Service
             return await castRep.UpdateAsync(castModel);
         }
 
-        public async Task<IEnumerable<CastModel>> GetAllCastAsync()
+        public async Task<IEnumerable<CastModel>> GetAllCastsAsync()
         {
             var result = await castRep.GetAllAsync();
             if (result != null)
@@ -94,6 +94,7 @@ namespace MovieShopMVC.Infrastructure.Service
             }
             return null;
         }
+
 
 
 

@@ -18,8 +18,4 @@
     <ProjectReference Include="..\MovieShopMVC.Infrastructure\MovieShopMVC.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Cast\" />
-  </ItemGroup>
-
 </Project>

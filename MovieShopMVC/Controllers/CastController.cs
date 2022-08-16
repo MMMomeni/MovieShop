@@ -14,6 +14,12 @@ namespace MovieShopMVC.Controllers
             this.castServ = castServ;
             this.movieCastServ = movieCastServ;
         }
+        [HttpGet]
+        public async Task<IActionResult> ShowAllMoviesByCast(int castId)
+        {
+            IEnumerable<MoviesByCastModel> moviesByCast = await movieCastServ.GetAllMoviesByCastId(castId);
+            return View(moviesByCast);
+        }
 
     }
 }

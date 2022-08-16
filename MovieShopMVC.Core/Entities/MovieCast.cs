@@ -11,14 +11,16 @@ namespace MovieShopMVC.Core.Entities
     public class MovieCast
     {
         public int Id { get; set; }
+        [ForeignKey("Movie")]
         public int MovieId { get; set; }
         [Required]
+        [ForeignKey("Cast")]
         public int CastId { get; set; }
         [Required]
         [Column(TypeName="varchar(450)")]
         public string Character { get; set; }
 
-        public virtual Movie Movie { get; set; }
-        public virtual Cast Cast { get; set; }
+        public virtual Movie? Movie { get; set; }
+        public virtual Cast? Cast { get; set; }
     }
 }

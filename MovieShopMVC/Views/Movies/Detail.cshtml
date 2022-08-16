@@ -12,13 +12,13 @@
 				<li class="m-3">@Model.Overview</li>
 			</ul>
 		</div>
-		<div class="col-4">
+		<div class="col-4 ">
 			<div><a class="btn btn-warning mb-3 mx-5">REVIEW</a></div>
 			<div><a class="btn btn-warning mb-3 mx-5">BUY $@Model.Price</a></div>
 		</div>
 	</div>
 </div>
-<div class="container mt-lg-5">
+<div class="container mt-lg-5" style="margin-top:200px">
 	<div class="row">
 		<div class="col-6">
 			<div class="text-white">MOVIE FACTS</div>
@@ -36,15 +36,32 @@
 			<div class="text-white"></div>
 		</div>
 		<div class="col-6">
-
+			@{
+				foreach (var item in Model.MovieCasts)
+				{
+					<a
+					class="text-decoration-none" asp-action="ShowAllMoviesByCast" asp-controller="Cast" asp-route-castId="@item.CastId" method="get">
+					<div class="text-white mx-5">
+					<img class="card-img rounded-circle mx-2" style="width:60px" src="@item.Cast.ProfilePath"/>
+					<span class="mx-2">@item.Cast.Name</span>
+					<span class="mx-2">@item.Character</span>
+					</div>
+					</a>
+				}
+			}
 		</div>
 	</div>
 </div>
 </section>
+
+
 <div class="fixed-bottom" style="
     bottom: 80px;
     left: 80%;
     margin-left: -104.5px;">
-<a class="btn btn-warning " asp-action="CreateCast" asp-controller="Movies" asp-route-movieId="@Model.Id">Add Cast</a></div>
+    <a class="btn btn-warning " asp-action="ChooseCast" asp-controller="Movies" asp-route-movieId="@Model.Id">Add Cast For This Movie</a></div>
+
+
+
 
 

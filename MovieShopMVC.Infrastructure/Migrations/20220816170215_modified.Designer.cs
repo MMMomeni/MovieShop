@@ -12,8 +12,8 @@ using MovieShopMVC.Infrastructure.Data;
 namespace MovieShopMVC.Infrastructure.Migrations
 {
     [DbContext(typeof(MovieShopDbContext))]
-    [Migration("20220814200220_initial")]
-    partial class initial
+    [Migration("20220816170215_modified")]
+    partial class modified
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

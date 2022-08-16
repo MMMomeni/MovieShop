@@ -13,5 +13,6 @@ namespace MovieShopMVC.Core.Contracts.Service
         Task<int> UpdateCastAsync(CastModel model);
         Task<int> DeleteCastAsync(int Id);
         Task<CastModel> GetCastByIdAsync(int Id);
+        Task<IEnumerable<CastModel>> GetAllCastsAsync();
     }
 }

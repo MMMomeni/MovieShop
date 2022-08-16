@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MovieShopMVC.Infrastructure.Data
 {
-    public class MovieShopDbContext:DbContext
+    public class MovieShopDbContext : DbContext
     {
         public MovieShopDbContext(DbContextOptions<MovieShopDbContext> options) : base(options)
         {
@@ -25,7 +25,26 @@ namespace MovieShopMVC.Infrastructure.Data
         public DbSet<Favorite> Favorite { get; set; }
         public DbSet<Review> Review { get; set; }
         public DbSet<Purchase> Purchase { get; set; }
-        public DbSet<Trailer> Trailer { get; set; } 
+        public DbSet<Trailer> Trailer { get; set; }
+
+        /*
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<MovieCast>()
+                .HasOne(c => c.Cast)
+                .WithOne(mc => mc.MovieCast)
+                .HasForeignKey<MovieCast>(c => c.CastId);
+
+            // each movie can have many movie casts
+            builder.Entity<Movie>()
+                .HasMany(m => m.MovieCasts)
+                .WithOne(mc => mc.Movie)
+                .HasForeignKey(mc => mc.MovieId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+        */
 
 
 
