@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MovieShopMVC.Core.Contracts.Service;
 using MovieShopMVC.Core.Models;
 using MovieShopMVC.Models;
@@ -34,11 +35,13 @@ namespace MovieShopMVC.Controllers
             return View();
         }
         [HttpGet]
+        [Authorize]
         public IActionResult CreateMovie()
         {
             return View();
         }
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateMovie(MovieModel model)
         {
             if (ModelState.IsValid)
@@ -60,11 +63,13 @@ namespace MovieShopMVC.Controllers
 
 
         [HttpGet]
+        [Authorize]
         public IActionResult CreateCast(int movieId)
         {
             return View(movieId);
         }
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateCast(CastModel model)
         {
             if (ModelState.IsValid)
@@ -84,6 +89,7 @@ namespace MovieShopMVC.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> ChooseCast(int movieId)
         {
             this.savedMovieId = movieId;
@@ -93,6 +99,7 @@ namespace MovieShopMVC.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> CreateMovieCast(int castId, int movieId)
         {
             var model = await castServ.GetCastByIdAsync(castId);
@@ -100,16 +107,11 @@ namespace MovieShopMVC.Controllers
             return View(model);
         }
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateMovieCast(MovieCastModel model)
         {
             if (ModelState.IsValid)
             {
-         
-                //model.MovieId = savedMovieId;
-                Console.WriteLine(model.Id);
-                Console.WriteLine(model.CastId);
-                Console.WriteLine(model.MovieId);
-                Console.WriteLine(model.Character);
                 await movieCastServ.InsertMovieCastAsync(model);
                 return RedirectToAction("Index");
             }

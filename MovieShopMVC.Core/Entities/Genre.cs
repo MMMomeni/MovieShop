@@ -15,7 +15,7 @@ namespace MovieShopMVC.Core.Entities
         [Column(TypeName = "varchar(64)")]
         public string Name { get; set; }
 
-        public virtual ICollection<MovieGenre> MovieGenres { get; set; }
+        public virtual ICollection<MovieGenre>? MovieGenres { get; set; }
 
        
     }

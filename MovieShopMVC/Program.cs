@@ -1,8 +1,13 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 using MovieShopMVC.Core.Contracts.Repository;
 using MovieShopMVC.Core.Contracts.Service;
+using MovieShopMVC.Core.Entities;
 using MovieShopMVC.Infrastructure.Data;
 using MovieShopMVC.Infrastructure.Repository;
 using MovieShopMVC.Infrastructure.Service;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,11 +20,47 @@ builder.Services.AddSqlServer<MovieShopDbContext>(builder.Configuration.GetConne
 builder.Services.AddScoped<IMovieRepositoryAsync, MovieRepositoryAsync>();
 builder.Services.AddScoped<ICastRepositoryAsync, CastRepositoryAsync>();
 builder.Services.AddScoped<IMovieCastRepositoryAsync, MovieCastRepositoryAsync>();
+builder.Services.AddScoped<IAccountRepositoryAsync, AccountRepositoryAsync>();
 
 // Service Injection
 builder.Services.AddScoped<IMovieServiceAsync, MovieServiceAsync>();
 builder.Services.AddScoped<IMovieCastServiceAsync, MovieCastServiceAsync>();
 builder.Services.AddScoped<ICastServiceAsync, CastServiceAsync>();
+builder.Services.AddScoped<IAccountServiceAsync, AccountServiceAsync>();
+
+
+/* If we did not have "User" class, we could directly use "IdentityUser".
+ * If we had role based properties inside "User" we did not need to add "IdentityRole" here.
+ */
+builder.Services.AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<MovieShopDbContext>()
+    .AddDefaultTokenProviders();
+
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{ //Should the token be saved after creation ?
+    options.SaveToken = true;
+    //for now false
+    options.RequireHttpsMetadata = false;
+    options.TokenValidationParameters = 
+    new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        // Reading Audience from appsetting
+        ValidAudience = builder.Configuration["JWT:ValidAudience"],
+        // Reading Issuer from appsetting
+        ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
+        // Setting the Secret from appsetting and encoding it
+        IssuerSigningKey = 
+        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
+    };
+});
 
 var app = builder.Build();
 
@@ -35,7 +76,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

@@ -18,6 +18,6 @@ namespace MovieShopMVC.Core.Entities
         [Column(TypeName="varchar(MAX)")]
         public string? ReviewText { get; set; }
 
-        public virtual Movie Movie { get; set; }
+        public virtual Movie? Movie { get; set; }
     }
 }
