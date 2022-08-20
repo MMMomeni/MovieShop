@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MovieShopMVC.Core.Contracts.Service;
+using MovieShopMVC.Core.Entities;
 using MovieShopMVC.Core.Models;
 using MovieShopMVC.Models;
 using System.Diagnostics;
@@ -15,13 +17,15 @@ namespace MovieShopMVC.Controllers
         private int savedMovieId;
         //private int castId;
         //private string character;
-        
+        private readonly SignInManager<User> signInManager;
 
-        public MoviesController(IMovieServiceAsync movieServ, IMovieCastServiceAsync movieCastServ, ICastServiceAsync castServ)
+
+        public MoviesController(IMovieServiceAsync movieServ, IMovieCastServiceAsync movieCastServ, ICastServiceAsync castServ, SignInManager<User> signInManager)
         {
             this.movieServ = movieServ;
             this.movieCastServ = movieCastServ;
             this.castServ = castServ;
+            this.signInManager = signInManager;
         }
 
         public async Task<IActionResult> Index()

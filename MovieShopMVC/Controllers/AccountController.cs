@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using MovieShopMVC.Core.Contracts.Service;
+using MovieShopMVC.Core.Entities;
 using MovieShopMVC.Core.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -12,10 +14,12 @@ namespace MovieShopMVC.Controllers
     {
         private readonly IAccountServiceAsync accountServiceAsync;
         private readonly IConfiguration configuration;
-        public AccountController(IAccountServiceAsync accountServiceAsync, IConfiguration configuration)
+        private readonly SignInManager<User> signInManager;
+        public AccountController(IAccountServiceAsync accountServiceAsync, IConfiguration configuration, SignInManager<User> signInManager)
         {
             this.accountServiceAsync = accountServiceAsync;
             this.configuration = configuration;
+            this.signInManager = signInManager;
         }
         [HttpGet]
         public IActionResult SignUp()
@@ -33,7 +37,8 @@ namespace MovieShopMVC.Controllers
             }
             return View(model);
         }
-        public IActionResult Login(SignInModel model)
+        [HttpGet]
+        public IActionResult Login()
         {
             return View();
         }
@@ -42,6 +47,7 @@ namespace MovieShopMVC.Controllers
         public async Task<IActionResult> Login(SignInModel model)
         {
             var result = await accountServiceAsync.LoginAsync(model);
+            Console.WriteLine(result);
 
             if (!ModelState.IsValid)
             {
@@ -53,6 +59,7 @@ namespace MovieShopMVC.Controllers
                 ModelState.AddModelError(string.Empty, "Please check username and password");
                 return View();
             }
+            //return View();
 
 
             //list of claims
@@ -76,7 +83,28 @@ namespace MovieShopMVC.Controllers
 
             /* We need to return an object because Angular needs objects, otherwise
              * we could just return "t"*/
-            return Ok(new { jwt = t });
+            //return Ok(new { jwt = t });
+
+
+            //if (HttpContext.User.Identity.IsAuthenticated)
+            //{
+            //    Console.WriteLine(HttpContext.User.Identity.IsAuthenticated);
+            //}
+
+
+            //if (signInManager.IsSignedIn(User))
+            //{
+            //    Console.WriteLine(signInManager.IsSignedIn(User));
+            //}
+
+
+            if (t != null)
+            {
+                return RedirectToAction("Index", "Movies");
+                
+            }
+            
+            return null;
 
         }
     }

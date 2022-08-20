@@ -43,6 +43,7 @@ namespace MovieShopMVC.Infrastructure.Repository
         public Task<SignInResult> LoginAsync(SignInModel model)
         {
             // Email, Password, Remember the info, LockoutOnFailure
+            
             return signInManager.PasswordSignInAsync(model.Email, model.Password, model.Remember, false);
         }
 
