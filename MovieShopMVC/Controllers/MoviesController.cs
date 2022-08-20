@@ -39,13 +39,13 @@ namespace MovieShopMVC.Controllers
             return View();
         }
         [HttpGet]
-        [Authorize]
+        ///[Authorize]
         public IActionResult CreateMovie()
         {
             return View();
         }
         [HttpPost]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> CreateMovie(MovieModel model)
         {
             if (ModelState.IsValid)
@@ -67,13 +67,13 @@ namespace MovieShopMVC.Controllers
 
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public IActionResult CreateCast(int movieId)
         {
             return View(movieId);
         }
         [HttpPost]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> CreateCast(CastModel model)
         {
             if (ModelState.IsValid)
@@ -93,7 +93,7 @@ namespace MovieShopMVC.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> ChooseCast(int movieId)
         {
             this.savedMovieId = movieId;
@@ -103,7 +103,7 @@ namespace MovieShopMVC.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> CreateMovieCast(int castId, int movieId)
         {
             var model = await castServ.GetCastByIdAsync(castId);
@@ -111,7 +111,7 @@ namespace MovieShopMVC.Controllers
             return View(model);
         }
         [HttpPost]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> CreateMovieCast(MovieCastModel model)
         {
             if (ModelState.IsValid)
